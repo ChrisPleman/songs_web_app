@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <!-- * Navbar title -->
+    <a class="navbar-brand" href="{{ url_for('home') }}">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+    <!-- * Button 1 -->
+          <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
+        </li>
+        <li class="nav-item">
+    <!-- * Button 2 -->
+          <a class="nav-link" href="{{ url_for('discover') }}">Discover</a>
+        </li>
+        <li class="nav-item dropdown">
+    <!-- * Button 3 -->
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Library
+          </a>
+          <ul class="dropdown-menu">
+            <!-- todo: Probably makes sense to create sub pages for the songs, albums, and playlists -->
+    <!-- * Dropdown 1 -->
+            <li><a class="dropdown-item" href="{{ url_for('library') }}">Songs</a></li>
+    <!-- * Dropdown 2 -->
+            <li><a class="dropdown-item" href="{{ url_for('library') }}">Albums</a></li>
+    <!-- * Dropdown 3 -->
+            <li><a class="dropdown-item" href="{{ url_for('library') }}">Playlists</a></li>
+            <li><hr class="dropdown-divider"></li>
+    <!-- * Dropdown 4 -->
+            <li><a class="dropdown-item" href="{{ url_for('library') }}">Library</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+    <!-- * Button 4 -->
+          <a class="nav-link" href="{{ url_for('account') }}">My Account</a>
+        </li>
+        <li class="nav-item">
+    <!-- * Button 5 -->
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+    <!-- * Search Form -->
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
