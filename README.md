@@ -1,3 +1,6 @@
+![Static Badge](https://img.shields.io/badge/Python-3.12.4-blue)
+![Static Badge](https://img.shields.io/badge/Flask-3.1.1-green)
+
 After following the coursera tutorial I am looking to create a basic web app that can handle several "users", and can handle the addition, editing, and deletion of songs from playlists/libraries etc.
 
 Currently, most of my effort went into 2 things:
