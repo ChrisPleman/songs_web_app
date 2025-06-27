@@ -4,6 +4,35 @@ class Node():
         self.next = None
         self.prev = None
 
+# todos:
+    # ? Add doc strings to each of the methods
+        # add()
+        # addFirst()
+        # addAll()
+        # removeFirst()
+        # removeLast()
+        # remove()
+        # addToEmptyList()
+        # raiseIfWrongDtype()
+        # raiseIfEmpty()
+        # isEmpty()
+        # isHeadNode()
+        # isTailNode()
+    # ? Stress test each method
+        # * See the following file: unit_tests/test_linkedlist.py
+        # add()
+        # addFirst()
+        # addAll()
+        # removeFirst()
+        # removeLast()
+        # remove()
+        # addToEmptyList()
+        # raiseIfWrongDtype()
+        # raiseIfEmpty()
+        # isEmpty()
+        # isHeadNode()
+        # isTailNode()
+
 class LinkedList():
     
     def __init__(self, data=None):
@@ -33,18 +62,24 @@ class LinkedList():
         # Enforcing data types
         self.raiseIfWrongDtype(element)
     
-        node = self.head
+        # We don't need to loop, we just need access to the last node
+        prev_tail_node = self.tail
+        self.tail = new_node
+        new_node.prev = prev_tail_node
+        prev_tail_node.next = new_node
 
-        while True:
-            if node.next:
-                node = node.next
-                continue
+        # node = self.head
+
+        # while True:
+        #     if node.next:
+        #         node = node.next
+        #         continue
             
-            # Adding a new element to the end of the list
-            node.next = new_node
-            new_node.prev = node
-            self.tail = new_node
-            break
+        #     # Adding a new element to the end of the list
+        #     node.next = new_node
+        #     new_node.prev = node
+        #     self.tail = new_node
+        #     break
         
         return self
     
@@ -176,17 +211,3 @@ class LinkedList():
     
     def isTailNode(self, node):
         return node is self.tail
-        
-        
-            
-        
-        
-llist = LinkedList(1)
-# llist = llist.addAll([2,3,4])
-node = llist.head
-while True:
-    if node.data:
-        print(node.data)
-        node = node.next
-    else:
-        break
