@@ -79,6 +79,8 @@ class LinkedList():
         #     node.next = new_node
         #     new_node.prev = node
         #     self.tail = new_node
+            # ! Found that the self.addAll() method was not resulting in the appropriate size, but tracked the bug back to this, as there was no size incrementation in this loop
+            self.size += 1
         #     break
         
         return self
@@ -106,6 +108,7 @@ class LinkedList():
     def addAll(self, collection):
         # Nice and simple now
         for element in collection:
+            print(f"Going to add the following element: {element}")
             self.add(element)
         
         return self
@@ -145,7 +148,6 @@ class LinkedList():
         self.size -= 1
         
         return self
-        
     
     def remove(self, element):
         
@@ -182,10 +184,55 @@ class LinkedList():
                 # This already handles lists of size 1
                 self.removeLast()
                 return self
+    
+    def insert(self, index, element):
+        ''''''
+        # Might as well do a one time check because it's fast; we don't want to use 'self.raiseIfEmpty()' because we'd still want to add it to the list if inserting at index 0
+        if index >= self.size:
+            raise IndexError("The magnitude of the value passed through the 'index' argument implies a size greater than the current linked list.")
         
+        # Support negative indexing
+        if index < 0:
+            # This is the simple approach, because I'm not actually traversing backwards, which would be more appropriate if a negative index was passed
+            # todo: Allow for negative indexing to lead to reverse traversal of the list (i.e., start from self.tail, and use .prev)
+            index = self.size + index # e.g., an index value of -1 would return a number that is 1 less than the size, to account for the resizing below
+        
+        node = self.head
+        new_node = Node(element)
+        
+        for current_index in range(index + 1):
+            # We are at the insertion point
+            if current_index == index:
+                # todo: Figure out why when I pass "0" as the index, it actually replaces the first element
+                # todo: Figure out why when I pass "1" as the index, it actually inserts at position 3 or index 2 --> I think I know this: it's zero indexed, and inserts after the element
+                print("About to insert element")
+                
+                if self.isHeadNode(node):
+                    self.head = new_node
+                    
+                if self.isTailNode(node):
+                    self.tail = new_node
+                    
+                # What's nice is the operation will stay the same, and we only have to conditionally update the LinkedList head/tail attribute if necessary
+                new_node.next = node.next
+                new_node.prev = node
+                node.next = new_node
+                    
+                break
+            
+            node = node.next
+            
+        return self
+                
+            
+        
+            
+                
+                
         
     # * Utility functions
     def addToEmptyList(self, new_node):
+        print("Adding to empty list!")
         self.head = new_node
         self.tail = new_node
         self.dtype = type(new_node.data)
@@ -210,4 +257,20 @@ class LinkedList():
         return node is self.head
     
     def isTailNode(self, node):
+        
         return node is self.tail
+
+        
+        
+            
+        
+        
+llist = LinkedList()
+llist.addAll([1,2,3,4]).insert(0,5)
+node = llist.head
+
+while True:
+    print(node.data)
+    node = node.next
+    if not node:
+        break
