@@ -67,21 +67,7 @@ class LinkedList():
         self.tail = new_node
         new_node.prev = prev_tail_node
         prev_tail_node.next = new_node
-
-        # node = self.head
-
-        # while True:
-        #     if node.next:
-        #         node = node.next
-        #         continue
-            
-        #     # Adding a new element to the end of the list
-        #     node.next = new_node
-        #     new_node.prev = node
-        #     self.tail = new_node
-            # ! Found that the self.addAll() method was not resulting in the appropriate size, but tracked the bug back to this, as there was no size incrementation in this loop
-            self.size += 1
-        #     break
+        self.size += 1
         
         return self
     
@@ -223,16 +209,10 @@ class LinkedList():
             node = node.next
             
         return self
-                
-            
-        
-            
-                
-                
         
     # * Utility functions
     def addToEmptyList(self, new_node):
-        print("Adding to empty list!")
+        # print("Adding to empty list!")
         self.head = new_node
         self.tail = new_node
         self.dtype = type(new_node.data)
