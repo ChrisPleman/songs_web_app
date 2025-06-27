@@ -239,18 +239,3 @@ class LinkedList():
     def isTailNode(self, node):
         
         return node is self.tail
-
-        
-        
-            
-        
-        
-llist = LinkedList()
-llist.addAll([1,2,3,4]).insert(0,5)
-node = llist.head
-
-while True:
-    print(node.data)
-    node = node.next
-    if not node:
-        break
