@@ -6,6 +6,7 @@ with open('sensitive.json', 'r') as f:
     secret_keys = json.load(f)['secret_keys']
 
 app = Flask(__name__)
+# Create a secret key for the forms
 app.config['SECRET_KEY'] = secret_keys['SecretKey']
 
 from routes import *

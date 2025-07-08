@@ -1,5 +1,6 @@
 from app import app
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime, timezone
 from sqlalchemy import PrimaryKeyConstraint
 import json
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,26 +10,33 @@ with open('sensitive.json', 'r') as f:
     pg_info = json.load(f)['postgres']
 
 # Create the link to the database for this app
-database_uri_string = f'postgresql://{pg_info['username']}:{pg_info['password']}@localhost:{pg_info['port']}/{pg_info['database']}'
+database_uri_string = f"postgresql://{pg_info['username']}:{pg_info['password']}@localhost:{pg_info['port']}/{pg_info['database']}"
 
 # Configure the app database_uri_string
-app.confi['SQLALCHEMY_DATABASE_URI'] = database_uri_string
+app.config['SQLALCHEMY_DATABASE_URI'] = database_uri_string
 
 # Create an instance of the SQLAlchemy database
 db = SQLAlchemy(app)
 
 # ! Commenting out for right now, so I can run the app without worrying about backend errors
 
-# User table
-# class User(db.Model):
-#     __tablename__ = 'user'
-#     id = db.Column(db.Integer, primary_key=True)
-#     # todo: At some point do some validation to enforce a minimum length 
-#     username = db.Column(db.String(64), nullable=False, unique=True)
-#     # todo: At some point do some validation to enforce a minimum length
-#     password_hash = db.Column(db.String(128), nullable=False)
-#     created_at = db.Column(db.DateTime, nullable=False)
-#     updated_at = db.Column(db.DateTime, nullable=False)
+# * User table
+class User(db.Model):
+    __tablename__ = 'user'
+    # PK for user
+    id = db.Column(db.Integer, primary_key=True)
+    # todo: At some point do some validation to enforce a minimum length
+    username = db.Column(db.String(64), nullable=False, unique=True)
+    email = db.Column(db.String(64), nullable=False, unique=True)
+    # # todo: At some point do some validation to enforce a minimum length
+    # password_hash = db.Column(db.String(128), nullable=False)
+    # We will want the created_at and updated_at to be the same when *creating* a user
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=timezone.utc))
+    
+    # For clarity
+    def __repr__(self):
+        return f"Table {self.__tablename__} added new user {self.username}."
     
     
 #     # * Password operations
@@ -181,6 +189,6 @@ db = SQLAlchemy(app)
 #     playlists = db.relationship('Playlist', backref='song')
 
 
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
     

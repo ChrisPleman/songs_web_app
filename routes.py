@@ -37,6 +37,11 @@ def home():
     
     return render_template('index.html', title='home'#, search_input=search_input, form=form
                            )
+    
+# Creating a route specifically for adding a user: The specific path is derived from this video: https://www.youtube.com/watch?v=Q2QmST-cSwc&list=PLCC34OHNcOtolz2Vd9ZSeSXWc8Bq23yEz&index=8
+@app.route('/user/add')
+def add_user():
+    return render_template('add_user.html', title='Login')
 
 @app.route('/discover')
 def discover():

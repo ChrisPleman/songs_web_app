@@ -7,3 +7,9 @@ from wtforms.validators import DataRequired
 class SearchForm(FlaskForm):
     search_input = StringField("search_input text", validators=[DataRequired()])
     submit = SubmitField("submit field text")
+    
+# Creating a form to capture users
+class UserForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired()])
+    submit = SubmitField("Submit")
