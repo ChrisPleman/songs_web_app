@@ -1,6 +1,7 @@
 from app import app
-from flask import render_template
+from flask import render_template, redirect, url_for, flash
 import forms
+from models import db, User
 
 
 # Pass stuff to the Navbar (in a nested extended template file navbar.html)
@@ -39,9 +40,40 @@ def home():
                            )
     
 # Creating a route specifically for adding a user: The specific path is derived from this video: https://www.youtube.com/watch?v=Q2QmST-cSwc&list=PLCC34OHNcOtolz2Vd9ZSeSXWc8Bq23yEz&index=8
-@app.route('/user/add')
+@app.route('/user/add', methods=['GET', 'POST'])
 def add_user():
-    return render_template('add_user.html', title='Login')
+    form = forms.UserForm()
+    
+    users = User.query.all()
+    
+    # Once user clicks submit
+    if form.validate_on_submit():
+        # Ensure there aren't multiple emails in database
+        if not User.query.filter_by(email=form.email.data).first():
+            print("No duplicate user")
+            # Creating an instance of the user class
+            user = User(
+                username=form.username.data,
+                email=form.email.data
+            )
+            
+            # Insert user record into table
+            db.session.add(user)
+            db.session.commit()
+        
+            # Print for better feedback
+            flash("User added successfully")
+        else:
+            print("Duplicate user present")
+            flash("There is already an account with that email in the database!")
+        # Reset form fields
+        form.email.data = ''
+        form.username.data = ''
+        
+        return redirect(url_for('add_user'))
+        
+        # return redirect(url_for('home'))
+    return render_template('add_user.html', title='Create Account', form=form, users=users)
 
 @app.route('/discover')
 def discover():

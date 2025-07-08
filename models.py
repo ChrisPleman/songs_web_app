@@ -34,9 +34,17 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=timezone.utc))
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=timezone.utc))
     
+    def __init__(self, username, email):
+        super().__init__()
+        self.username = username
+        self.email = email
+        utc_now = datetime.now(tz=timezone.utc)
+        self.created_at = utc_now
+        self.updated_at =utc_now
+    
     # For clarity
     def __repr__(self):
-        return f"Table {self.__tablename__} added new user {self.username}."
+        return f"Table {self.__tablename__} added new user {self.username} at time {self.created_at}."
     
     
 #     # * Password operations

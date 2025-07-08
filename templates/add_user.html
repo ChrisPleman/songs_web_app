@@ -1,5 +1,45 @@
 {% extends 'base.html' %}
 
-{% block header %}
+<!-- todo: Find and apply a more appealing layout for the login page -->
+{% block content %}
+
+<h1>{{ title }}</h1>
+<br><br><br>
+
+{% for message in get_flashed_messages() %}
+    <!-- todo: Figure out what the classes mean -->
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <!-- todo: Figure out what the classes mean -->
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+
+<div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+    <form method="post" action="{{ url_for('add_user') }}">
+        {{ form.hidden_tag() }}
+        {{ form.username.label }}
+        {{ form.username }}
+        <br>
+        {{ form.email.label }}
+        {{ form.email }}
+        <br>
+        {{ form.submit }}
+    </form>
+</div>
+
+<!-- ! This will need to be removed at some point. It's just here for debugging purposes. -->
+<h3>Current Users:</h3>
+<table class="table table-hover table-bordered table-striped">
+    {% for user in users %}
+    <tr>
+        <td>
+            <p>Username: {{ user.username }}</p>
+            <p>Email: {{ user.email }}</p>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 
 {% endblock %}
